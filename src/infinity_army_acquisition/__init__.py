@@ -1,0 +1,1 @@
+"""Standalone Army source acquisition."""
