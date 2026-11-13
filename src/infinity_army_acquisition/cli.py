@@ -242,6 +242,7 @@ def acquire_army_snapshot(
                 project_root=project_root,
                 language=language,
                 source_data_changed_on=source_data_changed_on,
+                require_new=True,
             )
     except Exception:
         if manifest is not None:

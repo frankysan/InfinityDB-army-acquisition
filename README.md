@@ -35,10 +35,18 @@ a competing acquisition cannot replace different provenance. Stale
 overwritten. Inspect interrupted staging before removing it. The selected
 filesystem must support hard links; no overwriting fallback is used.
 
+The acquisition transaction requires a newly created manifest, even if a
+competing run publishes identical bytes. This keeps rollback from deleting
+another run's output. Direct `write_snapshot_manifest` callers retain
+idempotent reuse by default; CRLF and LF are different byte identities.
+
 For use by InfinityDB, transfer the immutable ZIP and its matching
 manifest. InfinityDB validates the pair offline with
 tools.army_snapshot_source.resolve_army_snapshot. The normal
 InfinityDB build/serve/Docker workflows do not install this package.
+Keep the original ZIP and manifest basenames. The optional producer-relative
+`snapshot.archive.path` is informational: explicitly select the transferred
+archive without rewriting its manifest or resolving that path on the receiver.
 
 Only source-facing acceptance is copied here; importing or running
 InfinityDB's data model and normalization is not required.

@@ -37,6 +37,10 @@ No player-facing changes.
   without replacing an existing manifest; identical reruns are idempotent.
   Conflicting manifests, symlinks and occupied staging fail closed. No source
   ZIP or manifest format, CLI defaults, or existing evidence was migrated.
+- **Acquisition:** Kept acquisition rollback from deleting a competing run's
+  identical manifest. Acquisition claims only newly created provenance, while
+  direct manifest writes retain idempotent reuse. Equality now checks exact
+  bytes, including line endings.
 
 ### Upgrade notes
 

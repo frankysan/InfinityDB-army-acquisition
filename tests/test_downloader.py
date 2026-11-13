@@ -1,6 +1,58 @@
 import json
 
+import pytest
+
 from infinity_army_acquisition import cli as module
+
+
+@pytest.mark.parametrize("collision", ["identical-manifest", "different-manifest", "archive"])
+def test_manifest_race_preserves_other_acquisition_output(
+    tmp_path, monkeypatch, collision,
+) -> None:
+    from infinity_army_acquisition import snapshot_provenance as provenance
+
+    def download(staging, **_kwargs):
+        metadata = staging / "metadata.json"
+        faction = staging / "101-test.json"
+        metadata.write_text("{}", encoding="utf-8")
+        faction.write_text('{"version":"7.26246.158","units":[]}', encoding="utf-8")
+        return [metadata, faction]
+
+    link = provenance.os.link
+    winner = b""
+    target = None
+
+    def competing_link(source, destination):
+        nonlocal winner, target
+        target = destination
+        winner = source.read_bytes() if collision == "identical-manifest" else b"other acquisition\n"
+        destination.write_bytes(winner)
+        link(source, destination)
+
+    monkeypatch.setattr(module, "download_snapshot", download)
+    if collision == "archive":
+        from pathlib import Path
+
+        original_zip = provenance.zipfile.ZipFile
+
+        def competing_zip(path, mode="r", **kwargs):
+            nonlocal target, winner
+            if mode == "x":
+                target = Path(path)
+                winner = b"other acquisition's source ZIP"
+                target.write_bytes(winner)
+            return original_zip(path, mode, **kwargs)
+
+        monkeypatch.setattr(provenance.zipfile, "ZipFile", competing_zip)
+    else:
+        monkeypatch.setattr(provenance.os, "link", competing_link)
+    with pytest.raises((provenance.SnapshotProvenanceError, FileExistsError)):
+        module.acquire_army_snapshot(
+            tmp_path / "raw", tmp_path / "manifests", project_root=tmp_path,
+        )
+    assert target is not None and target.read_bytes() == winner
+    assert list((tmp_path / "raw").glob("*.zip")) == ([target] if collision == "archive" else [])
+    assert not list((tmp_path / "manifests").glob("*.tmp"))
 
 
 def load_module():
