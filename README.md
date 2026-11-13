@@ -26,7 +26,14 @@ The downloader validates each endpoint and repeats every request.
 Different response bytes between passes fail closed; no torn snapshot
 ZIP or manifest is published. It creates a timestamped JSON ZIP and
 version-3 snapshot provenance with exact archive and logical-content
-hashes. Unknown source-revision date formats are rejected.
+hashes. Unknown source-revision date formats are rejected. Manifest
+publication is no-clobber: a previously written manifest is reusable only
+when its complete canonical JSON bytes match. New manifests are staged
+exclusively and published through same-directory hard-link creation;
+a competing acquisition cannot replace different provenance. Stale
+`.json.tmp` files and symlink destinations cause an error rather than being
+overwritten. Inspect interrupted staging before removing it. The selected
+filesystem must support hard links; no overwriting fallback is used.
 
 For use by InfinityDB, transfer the immutable ZIP and its matching
 manifest. InfinityDB validates the pair offline with

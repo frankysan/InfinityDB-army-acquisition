@@ -30,6 +30,14 @@ No player-facing changes.
   database publication remain in InfinityDB.
   ([Standalone extraction](https://github.com/frankysan/InfinityDB-army-acquisition/commit/9a1dee7521dc5c973d7f43b1b7248a42da79b975))
 
+### Fixed
+
+- **Acquisition:** Made matching v3 provenance manifests safe against
+  concurrent acquisition runs. New JSON is staged exclusively and published
+  without replacing an existing manifest; identical reruns are idempotent.
+  Conflicting manifests, symlinks and occupied staging fail closed. No source
+  ZIP or manifest format, CLI defaults, or existing evidence was migrated.
+
 ### Upgrade notes
 
 - **Acquisition:** Replaced InfinityDB's former
