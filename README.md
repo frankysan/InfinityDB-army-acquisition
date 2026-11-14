@@ -20,7 +20,18 @@ Tests use mock API responses and local temporary ZIPs only.
 
 ## Manual acquisition
 
-    infinity-army-snapshot data/raw --language en --manifest-dir data/manifests/snapshots
+    infinity-army-snapshot --language en
+
+By default, immutable ZIPs are written under `local/data/raw/army/`
+and matching manifests under `local/data/manifests/snapshots/`, relative
+to the directory from which the command is invoked. The previous destinations
+remain available explicitly:
+
+    infinity-army-snapshot data/raw --manifest-dir data/manifests/snapshots
+
+This is the producer repository's own `local/` workspace. Transfer selected
+ZIP/manifest pairs to InfinityDB's equivalent paths explicitly; the two
+repositories do not share files or synchronize automatically.
 
 The downloader validates each endpoint and repeats every request.
 Different response bytes between passes fail closed; no torn snapshot

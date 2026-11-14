@@ -5,6 +5,28 @@ import pytest
 from infinity_army_acquisition import cli as module
 
 
+def test_default_output_locations_are_local_and_legacy_paths_remain_explicit(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    selected = []
+
+    def observe(destination, manifest_directory, **_kwargs):
+        selected.append((destination, manifest_directory))
+        raise ValueError("intentional stop before network")
+
+    monkeypatch.setattr(module, "acquire_army_snapshot", observe)
+    assert module.main([]) == 1
+    assert selected.pop() == (
+        module.Path("local/data/raw/army"),
+        module.Path("local/data/manifests/snapshots"),
+    )
+    assert module.main(["data/raw", "--manifest-dir", "data/manifests/snapshots"]) == 1
+    assert selected.pop() == (
+        module.Path("data/raw"),
+        module.Path("data/manifests/snapshots"),
+    )
+
+
 @pytest.mark.parametrize("collision", ["identical-manifest", "different-manifest", "archive"])
 def test_manifest_race_preserves_other_acquisition_output(
     tmp_path, monkeypatch, collision,

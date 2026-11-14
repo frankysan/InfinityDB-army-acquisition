@@ -24,6 +24,9 @@ No player-facing changes.
 
 ### Changed
 
+- **Acquisition:** New downloads default to `local/data/raw/army/` and
+  manifests to `local/data/manifests/snapshots/`; explicit legacy paths
+  continue to work. Cross-repository transfers remain manual.
 - **Acquisition:** Moved Army source acquisition and source-format acceptance
   into this focused repository, retaining the existing response-coherence,
   archive and provenance safeguards. Army normalization, merging, rules and

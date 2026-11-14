@@ -51,9 +51,11 @@ The hosted workflow runs these checks on Windows, Ubuntu and macOS with
 Python 3.11. Report the local result separately from hosted CI status.
 
 Live `infinity-army-snapshot` acquisition is a deliberate, networked
-operator action. Preserve the documented `data/raw` and
-`data/manifests/snapshots` CLI examples until an explicit compatible
-cutover; these paths are ignored and are not shipped as package data.
+operator action. Its new defaults target the standalone checkout's
+`local/data/raw/army/` and `local/data/manifests/snapshots/`; the old
+`data/raw` and `data/manifests/snapshots` destinations remain supported
+with explicit CLI arguments. Paths are ignored and not packaged. Transfer
+reviewed pairs to InfinityDB explicitly, without changing manifest bytes.
 For **new** ignored research, validation, private handoffs and scratch,
 use descriptive categorized `local/data/`, `local/research/`,
 `local/validation/`, `local/handoffs/` or `local/work/` destinations.

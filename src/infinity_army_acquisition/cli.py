@@ -264,13 +264,13 @@ def acquire_army_snapshot(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("destination", nargs="?", type=Path, default=Path("data/raw"))
+    parser.add_argument("destination", nargs="?", type=Path, default=Path("local/data/raw/army"))
     parser.add_argument("--language", default="en", help="Army API language code (default: en)")
     parser.add_argument(
         "--manifest-dir",
         type=Path,
-        default=Path("data/manifests/snapshots"),
-        help="Generated snapshot manifest directory (default: data/manifests/snapshots)",
+        default=Path("local/data/manifests/snapshots"),
+        help="Generated snapshot manifest directory (default: local/data/manifests/snapshots)",
     )
     args = parser.parse_args(argv)
     try:
