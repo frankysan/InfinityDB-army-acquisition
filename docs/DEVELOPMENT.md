@@ -65,6 +65,11 @@ consumer, backup/restore and provenance review.
 
 ## Documentation and lifecycle
 
+- All agents must record concrete improvement opportunities in the
+  [agent improvement log](AGENT_IMPROVEMENTS.md), including out-of-scope
+  ideas. Follow its evidence, deduplication and status requirements. The
+  log collects suggestions; it does not authorize work or replace an
+  approved task plan.
 - Update the README for changed CLI, supported source shape or handoff;
   this guide for developer/check policy; code/tests for executable
   guarantees; and the changelog for meaningful operator consequences.

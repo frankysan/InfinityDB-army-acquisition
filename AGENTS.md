@@ -44,6 +44,17 @@ as a pinned contract.
   purpose, scope and lifetime. Keep existing documented CLI paths until
   consumers and migration are reviewed. Never bulk-delete, relocate or
   overwrite private sources because they are ignored or look obsolete.
+- **Record improvement opportunities as they arise.** All coding, research
+  and documentation agents must record concrete potential improvements to
+  code, tests, tooling, workflows or agent instructions in the dedicated
+  [agent improvement log](docs/AGENT_IMPROVEMENTS.md), including ideas outside
+  the current task. Update an existing matching entry rather than duplicating
+  it. Include the date, affected files or instructions, supporting observations,
+  proposed change, expected benefit and status; distinguish observations from
+  hypotheses and exclude secrets and private source material. Recording a
+  suggestion does not authorize implementing it or expanding task scope.
+  Update its disposition when resolved and mention relevant new entries in
+  the handoff.
 - Apply the repository-specific [checks and documentation lifecycle](docs/DEVELOPMENT.md)
   to each coherent change. Design and run focused checks during implementation.
   Record deferred checks only for a concrete blocker, with exact inputs,
