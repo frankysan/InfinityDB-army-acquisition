@@ -111,5 +111,18 @@ Historical folder identities remain candidate evidence, not automatic
 reassignments. Commit dates and within-day backup observation ordering do
 not establish upstream publication order. See [historical acquisition](docs/HISTORY.md).
 
+Reconcile historical identity evidence after running Git recovery:
+
+```powershell
+python -m tools.history_reconcile `
+    --chronology local/data/history/chronology/backup-v1-final.json `
+    --git-recovery local/data/history/git-recovery/main-v1.json `
+    --output local/data/history/chronology/reconciled-v1.json
+```
+
+The new report preserves previous source reports, marks inferred assignments,
+retains unresolved documents and distinguishes backup observation order from
+upstream publication order. See [the reviewed evidence policy](docs/HISTORY.md).
+
 For offline validation, `python -m tools.run_checks` runs the same pytest
 suite as `python -m pytest -q`.

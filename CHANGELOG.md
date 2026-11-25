@@ -31,6 +31,9 @@ No player-facing changes.
 - **Historical acquisition:** Added offline Git-object recovery of faction and
   metadata path/blob histories, historical identity candidates and backup
   observation ordering. Supports bare mirrors without working tree checkout.
+- **Historical acquisition:** Added Git-backed chronology reconciliation,
+  retaining explicit historical identity evidence, byte aliases, metadata
+  provenance, and unresolved faction assignments.
 
 ### Changed
 

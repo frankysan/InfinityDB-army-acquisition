@@ -114,10 +114,53 @@ full private mirror scan explicitly from the checkout, then review proposed
 identities and any unresolved or conflicting observations. The mirror is not
 directly accessible through the current Git-scoped MCP workspace interface.
 
+## Reconciled chronology v1
+
+The private main-ref recovery report, at source tip
+`0b402cf1bb8aaabe594c67da93bb4e59b049cfbc`, contains 101 Army-related commits,
+1,372 faction path/blob pairs and 35 metadata path/blob pairs (14 N4, 13 N5,
+8 CodeOne). All archived faction documents match; no additional faction
+versions were recovered in this scope. The metadata history adds 32 revisions.
+
+The offline reconciliation binds the original chronology and Git recovery by
+their SHA-256 identities and recomputes the comparison before using it. It
+preserves prior decisions, evidence and ambiguity, and recomputes sequences
+without double-counting exact byte aliases within an edition and faction.
+A historical unique folder ID corroborated by membership evidence, or a unique
+previously assigned exact-byte alias, supports a new inferred assignment.
+Conflicting prior assignments are excluded from sequences rather than silently
+overwritten.
+
+Four CodeOne documents with conflicting membership arrays are assigned as
+qualified endpoint inferences, not membership confirmations: the downloader
+at commits `232df7e614304102a49f5e75e31182d668eeb263` and
+`f8962011247fcd88642de4b4b80d6cb635d1bec3` requests each metadata faction ID
+and stores responses using its slug. The reviewed main.go blob IDs are
+`4f973dbb76ce57fb995b4224c5aeee834239d09a` and
+`a844fc9f9f39f266a6e0c9df10c5544902bb2ddd` respectively. The rule is limited
+to these observations and the two reviewed folders, Combined Army (10601)
+and Nomads (10501). CodeOne memberships do not determine endpoint identity.
+
+The same historical slug and membership evidence supports three N4 Winterfor
+documents (106); the exact-byte alias to the later suffixed folder supports one
+N5 Contracted Back-up assignment (998). The source downloader at
+`825fde0c9f58e0d1846db7de94b9d63281d04255` (main.go blob
+`05f961293a8713a2b495b665fcc9e12e14308447`) explicitly disambiguates duplicate
+slugs by appending the faction ID. Earlier unsuffixed filenames cannot generally
+identify which endpoint supplied a document; retain 15 unresolved observations
+(7 N4, 8 N5). Do not extrapolate from the one exact-byte match.
+
+Result: 1,357 assigned documents (58 direct matches, 1,299 inferred), 119
+edition-specific faction sequences and 1,355 distinct assigned faction contents.
+113 same-day groups have distinguishable first-parent backup ordering and four
+remain unordered. All upstream within-day publication ordering remains unknown.
+The report retains the historical metadata references, not a replacement for
+the original Git objects. It does not yet constitute a consumer handoff.
+
 ## Subsequent work
 
-1. Execute Git recovery on the local mirror and review proposed historical
-   faction IDs, same-day evidence and any additional historical refs.
+1. Review additional historical refs (including n4-checkpoint) and independent
+   direct acquisitions, where useful for remaining ambiguous observations.
 2. Preserve each distinct source document with provenance and explicit
    chronology gaps; identify possible complete snapshots as secondary outputs.
 3. Define a versioned downstream handoff with InfinityDB, then derive semantic
