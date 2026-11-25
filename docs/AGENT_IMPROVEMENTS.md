@@ -69,3 +69,58 @@ Use one improvement per entry:
   without relying on conversation history. This benefit is unmeasured.
 - **Disposition:** Implemented by the accompanying documentation change,
   following the user's instruction. No code or acquisition contracts changed.
+
+### AI-0002 — Add an advisory update check using endpoint ETags
+
+- **Date:** 2026-11-17
+- **Status:** proposed
+- **Affected files or instructions:** `src/infinity_army_acquisition/cli.py`,
+  corresponding HTTP tests, and `README.md`.
+- **Observations:** At producer revision
+  `098d16c48a07f3b17ff4303e3b237648dfd1b97a`, acquisition reads every response
+  body twice and does not retain HTTP validators. Live header-only inspection
+  of GET responses from `/army/infinity/en/metadata`, `/army/units/en/101`
+  and `/army/units/en/201` found ETags; HEAD responses for metadata and faction
+  101 did not expose them. A matching `If-None-Match` returned 304 for metadata,
+  but 200 with the same ETag for both sampled faction endpoints. A nonmatching
+  validator returned 200 for metadata and faction 101. GET bodies were not
+  read or saved by the probe. Some body bytes may still have travelled before
+  each connection closed. Other endpoints/languages and the reliability of
+  validators across actual upstream edits remain unverified.
+- **Proposed improvement:** Add a separately selected advisory check command
+  with a language/base-URL/endpoint-specific ETag baseline tied to a known
+  snapshot. Use conditional GET where supported; otherwise compare GET
+  headers and close the response without reading its body. Check metadata
+  and the complete faction endpoint set, including additions/removals; do
+  not treat metadata alone as a global data revision. Report changed,
+  unchanged-validator, or unknown explicitly; absent validators, errors or
+  an unbound baseline must not imply unchanged. Establish initial baseline
+  correspondence explicitly rather than deriving opaque ETags from archive
+  hashes. Keep check receipts separate from immutable snapshot provenance
+  and preserve the full two-pass byte comparison for actual acquisitions.
+- **Expected benefit:** Reduce transferred data and avoid unnecessary new
+  snapshots when upstream validators match. Savings and change-detection
+  reliability are unmeasured; GET-header comparison cannot guarantee zero
+  response-body traffic when conditional requests are ignored.
+- **Disposition:** Recorded during the user's update-check feasibility
+  investigation. Implementation is not authorized by this entry; no CLI or
+  snapshot contract changed.
+
+### AI-0003 — Expose standalone acquisition through a bounded agent workflow
+
+- **Date:** 2026-11-25
+- **Status:** proposed
+- **Affected files or instructions:** `README.md`, package CLI and MCP workspace integration.
+- **Observations:** The documented `infinity-army-snapshot` console entry point is
+  not exposed by the connected workspace execution tools, which accept tracked
+  `tools.*` modules or fixed development profiles. The checkout has no such
+  acquisition module. The standalone pytest development-job request also returned
+  a validation error; its cause has not been established.
+- **Proposed improvement:** Provide a deliberately selected, bounded acquisition
+  operation for the existing CLI, with language selection, private output paths,
+  and a receipt containing the archive and manifest identities. Keep live network
+  acquisition separate from offline tests; verify standalone test-job support.
+- **Expected benefit:** Agents can exercise the actual producer and report its
+  results without requiring a manual operator command or modifying the consumer.
+- **Disposition:** Proposed during the live acceptance investigation; no execution
+  integration or producer contract change authorized by this entry.
