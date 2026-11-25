@@ -77,3 +77,18 @@ It writes a new deterministic inventory of versioned faction documents and
 metadata, never a live snapshot. Exit 0 means all selected documents passed
 basic validation; 2 means a report was written with document issues; 1 means
 the inventory could not be completed or published.
+
+Group the archived documents into evidence-qualified faction sequences and
+compare them with a verified direct English N5 snapshot:
+
+```powershell
+python -m tools.history_chronology local/infinity-army-backup.zip `
+    --inventory local/data/history/inventory/backup-v1.json `
+    --direct "local/data/raw/army/JSON 20261125-162328.zip" `
+    --manifest "local/data/manifests/snapshots/JSON 20261125-162328.json" `
+    --output local/data/history/chronology/backup-v1-new.json
+```
+
+The chronology is a separate v1 research report. It retains unresolved
+identities and same-day ambiguity; it does not claim complete history or
+introduce gameplay change events.

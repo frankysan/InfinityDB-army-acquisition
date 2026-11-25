@@ -41,15 +41,51 @@ live-snapshot manifest. It is an inventory, not a consumer-ready snapshot.
 Do not infer introduction dates from earliest observations, exact publication
 times from encoded dates, or absence from incomplete source coverage.
 
+## Faction chronology v1
+
+The offline chronology checks the inventory against a fresh source scan,
+validates both archive and logical hashes of a supplied direct English N5 v3
+snapshot, then compares individual faction response bytes. The operator must
+select an N5 direct snapshot; the existing manifest does not encode edition.
+A unique direct byte match anchors the upstream faction ID. Otherwise, the
+intersection of all units' nonempty integer faction-membership arrays and the
+edition's retained metadata slug (including slug-ID folders) support an
+inferred assignment. Partial membership coverage is explicitly distinguished
+from full coverage; absent evidence never becomes a confirmed identity. A
+unique common membership ID in retained metadata may support a renamed folder
+only with full coverage. CodeOne membership IDs use a different namespace
+from its metadata: same-slug N4 metadata and common memberships can corroborate
+a CodeOne folder ID without merging editions. Conflicting or ambiguous evidence
+remains unresolved. These are source faction hypotheses, not canonical app
+identities; retained metadata may be newer than the historical document.
+
+Sequences are edition- and source-ID-scoped, grouped by encoded date. Within a
+date, distinct byte hashes are unordered; exact duplicate bytes preserve every
+member path. Inter-observation days measure spacing, not missing release counts.
+Direct matches, unmatched direct documents, membership evidence and unresolved
+archive documents are retained. The report is research evidence, not a new
+snapshot or consumer contract. No semantic unit changes are derived here.
+
+## Observed validation (2026-11-25)
+
+The local backup ZIP inventory contains 1,372 faction responses. Comparing the
+English N5 acquisition dated 2026-11-25 against that backup produced 58/58 exact
+faction byte matches and equal parsed metadata. Chronology assigned 1,349
+responses (58 direct matches, 1,291 inferred); 23 remain unresolved, including
+16 under the historically colliding contracted-back-up folder, three N4
+winterfor documents and four CodeOne documents. The 117 same-day unordered
+groups require further evidence before deriving within-day changes. The private
+report retains all observations and hashes. The standalone pytest execution
+route remains blocked through MCP (AI-0003); run the repository suite locally.
+
 ## Subsequent work
 
-1. Validate the full archive and compare original bytes to direct acquisitions.
-2. Recover Git blob and commit provenance and historical metadata from the bare
-   mirror without a working tree. Investigate renamed and colliding faction
-   folders and derive source faction identities from contemporaneous evidence.
-3. Preserve each distinct source document with provenance and explicit
+1. Recover Git blob and commit provenance and historical metadata from the bare
+   mirror without a working tree. Resolve remaining historical identities using
+   contemporaneous evidence and check same-day order where supported.
+2. Preserve each distinct source document with provenance and explicit
    chronology gaps; identify possible complete snapshots as secondary outputs.
-4. Define a versioned downstream handoff with InfinityDB, then derive semantic
+3. Define a versioned downstream handoff with InfinityDB, then derive semantic
    unit histories there. Do not publish or change the consumer in this project.
 
 Live API acquisition and its two-pass acceptance contract remain unchanged.

@@ -25,6 +25,9 @@ No player-facing changes.
   N4, N5 and CodeOne faction revision documents and metadata. Reports preserve
   byte identities and validation issues for future unit history research,
   independently of the live snapshot format.
+- **Historical acquisition:** Added evidence-qualified faction chronology and
+  exact-byte comparison against a verified direct English N5 snapshot. Retains
+  ambiguous identities, unordered same-day observations and coverage limits.
 
 ### Changed
 
