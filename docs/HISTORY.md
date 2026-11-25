@@ -157,13 +157,57 @@ remain unordered. All upstream within-day publication ordering remains unknown.
 The report retains the historical metadata references, not a replacement for
 the original Git objects. It does not yet constitute a consumer handoff.
 
+## Historical source archive v1
+
+The private archive stores each exact document byte sequence once, at
+`objects/sha256/<sha256>.json`. The index records each source observation
+independently (backup ZIP member, Git path/blob pair or direct API ZIP member),
+its edition, byte identity, source revision where known, and faction ID or
+unresolved identity status. Git observations retain commit and historical
+metadata-blob references; direct observations retain their snapshot identity,
+acquisition time and metadata SHA-256. Duplicate source observations are not
+duplicate changes. Metadata objects are preserved as raw bytes, not recreated
+from their extracted faction rows.
+
+The builder recomputes chronology and reconciliation, checks each selected
+direct v3 snapshot, and, when supplied a local mirror, recomputes the pinned
+Git recovery. Each Git object is checked against its blob ID and SHA-256.
+The original inventory, chronology, recovery, reconciliation and selected
+direct manifests are embedded unchanged as hashed evidence. Additional direct
+English N5 snapshot pairs may be selected without changing the historical
+reconciliation. Their independently identified faction observations remain
+separate; this stage does not extend the reconciled sequences automatically.
+The embedded reconciled chronology is the source of its existing sequence
+assignments and backup ordering. No new unit identities or semantic changes
+are derived.
+
+The archive is deterministic for fixed inputs and the same ZIP implementation.
+It is verified before exclusive publication. The standalone verifier checks
+internal member sets, byte hashes, evidence hashes, reference integrity and
+summary consistency; it does not authenticate an independently untrusted
+index or replace the original input checks. An external archive SHA-256
+identifies the finished artifact. Completeness means all referenced bytes
+for the selected inputs exist, not full historical or release coverage.
+Partial builds require explicit opt-in, enumerate missing hashes and sizes,
+and return exit code 2; strict verification rejects them. Retain the mirror
+and original sources separately.
+
+The 2026-11-25 partial real-source build retained 2,841 source observations,
+1,374 unique available objects (1,370 faction, four metadata) and 32 missing
+historical metadata objects. The 30 unresolved faction observations are the
+same 15 ambiguous documents recorded in two independent source inventories.
+The external mirror path is rejected by MCP (script_path_escape); completing
+the selected-input archive requires running the documented mirror command
+locally. The complete path is tested with a synthetic bare repository.
+No private archive, report or downloaded document is committed or published.
+
 ## Subsequent work
 
-1. Review additional historical refs (including n4-checkpoint) and independent
+1. Complete and verify the real-source archive with the local mirror.
+2. Review additional historical refs (including n4-checkpoint) and independent
    direct acquisitions, where useful for remaining ambiguous observations.
-2. Preserve each distinct source document with provenance and explicit
-   chronology gaps; identify possible complete snapshots as secondary outputs.
 3. Define a versioned downstream handoff with InfinityDB, then derive semantic
    unit histories there. Do not publish or change the consumer in this project.
+   Complete reconstructed snapshots remain a secondary capability.
 
 Live API acquisition and its two-pass acceptance contract remain unchanged.

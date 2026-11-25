@@ -34,6 +34,9 @@ No player-facing changes.
 - **Historical acquisition:** Added Git-backed chronology reconciliation,
   retaining explicit historical identity evidence, byte aliases, metadata
   provenance, and unresolved faction assignments.
+- **Historical acquisition:** Added immutable, content-addressed private source
+  archives, exact source observation provenance, strict byte verification and
+  explicit partial-archive diagnostics.
 
 ### Changed
 

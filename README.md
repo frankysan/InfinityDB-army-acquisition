@@ -124,5 +124,31 @@ The new report preserves previous source reports, marks inferred assignments,
 retains unresolved documents and distinguishes backup observation order from
 upstream publication order. See [the reviewed evidence policy](docs/HISTORY.md).
 
+Consolidate the reviewed source material into a private content-addressed ZIP.
+Select the backup, its reports and one or more verified N5 direct snapshot
+pairs explicitly. From the acquisition checkout:
+
+```powershell
+python -m tools.history_archive build `
+    --backup local/infinity-army-backup.zip `
+    --inventory local/data/history/inventory/backup-v1.json `
+    --chronology local/data/history/chronology/backup-v1-final.json `
+    --git-recovery local/data/history/git-recovery/main-v1.json `
+    --reconciled local/data/history/chronology/reconciled-v1.json `
+    --direct "local/data/raw/army/JSON 20261125-162328.zip" "local/data/manifests/snapshots/JSON 20261125-162328.json" `
+    --mirror "..\infinity-army-backup.git" `
+    --output local/data/history/archive/army-history-v1.zip
+
+python -m tools.history_archive verify local/data/history/archive/army-history-v1.zip
+```
+
+Repeat `--direct ZIP MANIFEST` for additional verified English N5 acquisitions.
+The original chronology snapshot must remain among the selected inputs.
+By default, missing Git-only objects block publication. An explicitly selected
+`--allow-partial` build or verification reports incompleteness with exit code 2.
+Use a distinct output path for partial evidence; no existing archive is overwritten.
+The verifier checks internal archive integrity, not independently authenticated
+provenance or complete upstream release coverage.
+
 For offline validation, `python -m tools.run_checks` runs the same pytest
 suite as `python -m pytest -q`.

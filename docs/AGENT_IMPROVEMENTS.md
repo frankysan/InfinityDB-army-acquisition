@@ -132,4 +132,9 @@ Use one improvement per entry:
   job (76 passed, 7 subtests passed). Standalone pytest execution is therefore
   available via that adapter; the direct pytest profile failure remains
   unexplained. The proposed live acquisition adapter remains open; no live
-  producer contract changed.
+  producer contract changed. During historical archive consolidation the
+  external bare mirror argument was explicitly rejected with
+  `script_path_escape`. Consider a separately authorized read-only source
+  mount or import workflow for external bare repositories; retain path
+  isolation by default. The archive builder supports a local operator command
+  and an explicit partial mode, not a bypass of the workspace restriction.
