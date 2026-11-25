@@ -45,8 +45,10 @@ python -m pip check
 python -m pytest -q
 ```
 
-Keep the default suite hermetic: mocked HTTP responses and temporary ZIPs
-only, with no live API, private snapshots or sibling checkout. Extend focused
+Keep the default suite hermetic: mocked HTTP responses, temporary ZIPs and
+synthetic local Git fixtures only, with no live API, private snapshots or sibling
+checkout. Git-backed tests require Git and do not clone from a network.
+The workspace test adapter `python -m tools.run_checks` runs the same pytest suite. Extend focused
 tests for successful archive/manifest round trips and negative paths:
 inconsistent responses, malformed payloads, unsafe/duplicate/case-colliding
 members, invalid dates, incomplete publication and source-hash mismatch.

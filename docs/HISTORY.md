@@ -78,11 +78,46 @@ groups require further evidence before deriving within-day changes. The private
 report retains all observations and hashes. The standalone pytest execution
 route remains blocked through MCP (AI-0003); run the repository suite locally.
 
+## Git-backed recovery v1
+
+Select a local complete Git repository (ordinary or bare), branch ref or exact
+commit. Git recovery pins that tip and scans the selected first-parent history
+of N4, N5 and CodeOne paths. It does not fetch, checkout or mutate the source.
+Shallow repositories are rejected. Other refs and non-first-parent branch
+history need separate review; this is not an exhaustive all-ref inventory.
+
+Recover each version-named faction path/blob pair and each edition's
+`army.json` path/blob pair, including ones no longer at the tip. Preserve Git
+object IDs, exact byte SHA-256, size, encoded source revision, commit ID,
+committer timestamp, first observation and subsequent reappearances. Record
+path removals and replacements, contemporaneous metadata blob and metadata
+faction rows. The original full bytes remain recoverable by Git blob ID; this
+report is not a replacement for the mirror.
+
+Compare against the existing v1 chronology by relative Army path and exact
+SHA-256, retaining both source identities. A unique contemporaneous metadata
+folder mapping, possibly corroborated by an exact-byte alias, is a **candidate**
+for previously unresolved identities. Conflicting candidate IDs are not
+accepted and previous assignments are not overwritten. A candidate is not an
+endpoint confirmation; historical downloader behavior, unit membership evidence
+and possible ID reuse still need review.
+
+For same-day groups, distinct first-observed first-parent commits establish
+an ordering of backup observations only. A tie, missing match or same commit
+remains unordered; upstream release order is always unknown at this stage.
+Commit timestamps are backup evidence, not source release timestamps.
+No unit change events or complete snapshot reconstructions are produced.
+
+The synthetic Git fixture covers a bare mirror, historical metadata changes,
+removed paths, exact-byte aliases and same-day observation ordering. Run the
+full private mirror scan explicitly from the checkout, then review proposed
+identities and any unresolved or conflicting observations. The mirror is not
+directly accessible through the current Git-scoped MCP workspace interface.
+
 ## Subsequent work
 
-1. Recover Git blob and commit provenance and historical metadata from the bare
-   mirror without a working tree. Resolve remaining historical identities using
-   contemporaneous evidence and check same-day order where supported.
+1. Execute Git recovery on the local mirror and review proposed historical
+   faction IDs, same-day evidence and any additional historical refs.
 2. Preserve each distinct source document with provenance and explicit
    chronology gaps; identify possible complete snapshots as secondary outputs.
 3. Define a versioned downstream handoff with InfinityDB, then derive semantic

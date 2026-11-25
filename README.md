@@ -16,7 +16,8 @@ Python 3.11 or newer; no external runtime dependencies.
     python -m pip install -e ".[test]"
     python -m pytest -q
 
-Tests use mock API responses and local temporary ZIPs only.
+Tests use mock API responses, temporary ZIPs and synthetic local Git
+repositories. They do not require network access or private archives.
 
 ## Manual acquisition
 
@@ -92,3 +93,23 @@ python -m tools.history_chronology local/infinity-army-backup.zip `
 The chronology is a separate v1 research report. It retains unresolved
 identities and same-day ambiguity; it does not claim complete history or
 introduce gameplay change events.
+
+Recover Git observations from a local bare mirror (Git must be installed).
+Run this from the acquisition checkout; select the mirror location explicitly:
+
+```powershell
+python -m tools.history_git "..\infinity-army-backup.git" `
+    --ref refs/heads/main `
+    --chronology local/data/history/chronology/backup-v1-final.json `
+    --output local/data/history/git-recovery/main-v1.json
+```
+
+The command reads Git objects without checkout or fetch, pins the selected
+tip, and writes a new private report. It examines the selected ref's
+first-parent Army-path history, not all branches or every upstream release.
+Historical folder identities remain candidate evidence, not automatic
+reassignments. Commit dates and within-day backup observation ordering do
+not establish upstream publication order. See [historical acquisition](docs/HISTORY.md).
+
+For offline validation, `python -m tools.run_checks` runs the same pytest
+suite as `python -m pytest -q`.

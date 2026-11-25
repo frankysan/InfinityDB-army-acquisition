@@ -126,6 +126,10 @@ Use one improvement per entry:
   2026-11-25, the separate offline historical inventory successfully ran through
   a tracked `tools.history_inventory` adapter; the standalone pytest job still
   returned `validation_unknown` (both development and pytest test routes).
-  Unittest discovery also failed and would not cover the pytest suite. A live
-  acquisition adapter and standalone pytest integration remain open; no live
+  Unittest discovery also failed and would not cover the pytest suite.
+  Later on 2026-11-25, the tracked `tools.run_checks` adapter successfully ran
+  the complete hermetic pytest suite via the asynchronous workspace script
+  job (76 passed, 7 subtests passed). Standalone pytest execution is therefore
+  available via that adapter; the direct pytest profile failure remains
+  unexplained. The proposed live acquisition adapter remains open; no live
   producer contract changed.

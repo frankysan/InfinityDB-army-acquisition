@@ -28,6 +28,9 @@ No player-facing changes.
 - **Historical acquisition:** Added evidence-qualified faction chronology and
   exact-byte comparison against a verified direct English N5 snapshot. Retains
   ambiguous identities, unordered same-day observations and coverage limits.
+- **Historical acquisition:** Added offline Git-object recovery of faction and
+  metadata path/blob histories, historical identity candidates and backup
+  observation ordering. Supports bare mirrors without working tree checkout.
 
 ### Changed
 
