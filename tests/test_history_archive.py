@@ -7,6 +7,8 @@ from zipfile import ZipFile
 import pytest
 
 from infinity_army_acquisition.history_archive import build_archive, verify_archive
+from infinity_army_acquisition.history_handoff import acceptance
+from infinity_army_acquisition.snapshot_provenance import sha256_file
 from infinity_army_acquisition.history_chronology import chronology
 from infinity_army_acquisition.history_git import recover
 from infinity_army_acquisition.history_inventory import inventory_zip, write_inventory
@@ -84,6 +86,8 @@ def test_partial_complete_and_immutable_archive(tmp_path, inputs):
     with pytest.raises(ValueError, match="partial"):
         verify_archive(partial)
     assert verify_archive(partial, allow_partial=True) == report
+    with pytest.raises(ValueError, match="partial"):
+        acceptance(partial, sha256_file(partial))
 
     report = build_archive(*args, complete, mirror=mirror)
     assert report == verify_archive(complete)
@@ -92,6 +96,15 @@ def test_partial_complete_and_immutable_archive(tmp_path, inputs):
     assert report["summary"]["sourceObservations"] == 7
     assert report["summary"]["uniqueFactionObjects"] == 1
     assert report["summary"]["uniqueMetadataObjects"] == 2
+    receipt = acceptance(complete, sha256_file(complete))
+    assert receipt["consumerAcceptance"] == "not-tested"
+    assert receipt["summary"]["editionFactionSequences"] == 1
+    assert receipt["summary"]["assignedFactionDateContents"] == 1
+    assert receipt["summary"]["metadataContexts"] == {
+        "directSnapshotContext": 1, "gitObservedContext": 1,
+    }
+    with pytest.raises(ValueError, match="SHA-256 mismatch"):
+        acceptance(complete, "0" * 64)
     duplicate = tmp_path / "duplicate.zip"
     build_archive(*args, duplicate, mirror=mirror)
     original = complete.read_bytes()

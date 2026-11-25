@@ -150,5 +150,12 @@ Use a distinct output path for partial evidence; no existing archive is overwrit
 The verifier checks internal archive integrity, not independently authenticated
 provenance or complete upstream release coverage.
 
+For the historical handoff, run `python -m tools.history_handoff ARCHIVE
+--sha256 EXPECTED_DIGEST --output NEW_RECEIPT` against the explicitly pinned
+complete archive. See [historical source handoff](docs/HISTORY_HANDOFF.md)
+for the v1 candidate contract and consumer acceptance requirements. This
+is independent of the existing direct snapshot reader and does not authorize
+publication or automatic transfer.
+
 For offline validation, `python -m tools.run_checks` runs the same pytest
 suite as `python -m pytest -q`.

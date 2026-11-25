@@ -203,11 +203,18 @@ No private archive, report or downloaded document is committed or published.
 
 ## Subsequent work
 
-1. Complete and verify the real-source archive with the local mirror.
+The complete real-source archive has now passed strict verification with 1,406
+unique objects, zero missing objects, and 2,841 observations. The producer
+handoff acceptance also resolved every Git and direct metadata context.
+See [historical source handoff](HISTORY_HANDOFF.md) for the pinned candidate
+interface, exact archive identity, downstream responsibilities and outstanding
+consumer acceptance gate.
+
+1. Transfer the selected archive and acceptance receipt explicitly and validate
+   an independent InfinityDB reader against the candidate contract.
 2. Review additional historical refs (including n4-checkpoint) and independent
    direct acquisitions, where useful for remaining ambiguous observations.
-3. Define a versioned downstream handoff with InfinityDB, then derive semantic
-   unit histories there. Do not publish or change the consumer in this project.
-   Complete reconstructed snapshots remain a secondary capability.
+3. Derive semantic unit histories in InfinityDB. Do not publish or change the
+   consumer in this project. Complete reconstructed snapshots remain secondary.
 
 Live API acquisition and its two-pass acceptance contract remain unchanged.

@@ -37,6 +37,9 @@ No player-facing changes.
 - **Historical acquisition:** Added immutable, content-addressed private source
   archives, exact source observation provenance, strict byte verification and
   explicit partial-archive diagnostics.
+- **Historical acquisition:** Added a hash-pinned producer handoff acceptance
+  check and versioned historical source interface candidate. Consumer
+  integration and independent acceptance remain separate.
 
 ### Changed
 
