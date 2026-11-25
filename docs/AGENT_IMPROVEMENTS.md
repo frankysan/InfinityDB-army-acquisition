@@ -122,5 +122,10 @@ Use one improvement per entry:
   acquisition separate from offline tests; verify standalone test-job support.
 - **Expected benefit:** Agents can exercise the actual producer and report its
   results without requiring a manual operator command or modifying the consumer.
-- **Disposition:** Proposed during the live acceptance investigation; no execution
-  integration or producer contract change authorized by this entry.
+- **Disposition:** Proposed during the live acceptance investigation. On
+  2026-11-25, the separate offline historical inventory successfully ran through
+  a tracked `tools.history_inventory` adapter; the standalone pytest job still
+  returned `validation_unknown` (both development and pytest test routes).
+  Unittest discovery also failed and would not cover the pytest suite. A live
+  acquisition adapter and standalone pytest integration remain open; no live
+  producer contract changed.

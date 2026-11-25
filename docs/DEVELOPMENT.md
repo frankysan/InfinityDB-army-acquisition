@@ -24,6 +24,9 @@ operator-facing changes, not routine internal refactoring.
   using `tools.army_snapshot_source.resolve_army_snapshot`. Merging, identity
   resolution, curated rules, generated databases and browser publication
   belong to InfinityDB; this package must not depend on those modules.
+- **Historical recovery:** Follow [historical acquisition](HISTORY.md).
+  Document-level preservation for unit history is primary; recovered source
+  evidence is not equivalent to a directly validated live snapshot.
 
 A producer contract change requires a versioned input/output example, review
 of legacy-reader behavior, source-format tests, a matching consumer-verifier

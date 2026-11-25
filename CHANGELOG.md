@@ -21,6 +21,10 @@ No player-facing changes.
   downloading official Infinity Army metadata and Army lists without installing
   InfinityDB. The package requires Python 3.11 or newer and has no external
   runtime dependencies.
+- **Historical acquisition:** Added an offline backup ZIP inventory command for
+  N4, N5 and CodeOne faction revision documents and metadata. Reports preserve
+  byte identities and validation issues for future unit history research,
+  independently of the live snapshot format.
 
 ### Changed
 

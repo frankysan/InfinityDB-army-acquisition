@@ -61,3 +61,19 @@ archive without rewriting its manifest or resolving that path on the receiver.
 
 Only source-facing acceptance is copied here; importing or running
 InfinityDB's data model and normalization is not required.
+
+## Historical acquisition
+
+The primary downstream goal is evidence-backed unit version history.
+See [historical acquisition](docs/HISTORY.md) for scope and provenance.
+Inventory a private backup ZIP offline (no working tree needed):
+
+    python -m infinity_army_acquisition.history_inventory local/infinity-army-backup.zip --output local/data/history/inventory/backup-v1.json
+
+The equivalent installed command is `infinity-army-history-inventory`.
+The repository workspace adapter `python -m tools.history_inventory` accepts
+exactly the same arguments for bounded agent execution.
+It writes a new deterministic inventory of versioned faction documents and
+metadata, never a live snapshot. Exit 0 means all selected documents passed
+basic validation; 2 means a report was written with document issues; 1 means
+the inventory could not be completed or published.
